@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.neighbour_details.NeighbourDetailsActivity"
+    tools:showIn="@layout/activity_neighbour_details"
+    android:background="@color/lightGrey">
+
+    <LinearLayout
+        android:id="@+id/first_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/first_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            app:cardCornerRadius="1dp"
+            app:cardMaxElevation="20sp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/neighbour_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="Name"
+                    android:textColor="@color/lightBlack"
+                    android:textSize="@dimen/maintextSize" />
+
+                <ImageView
+                    android:id="@+id/icon_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/neighbour_name"
+                    android:layout_marginStart="@dimen/icon_margin"
+                    android:layout_marginTop="@dimen/marginBetweenElements"
+                    android:layout_marginEnd="@dimen/icon_margin"
+                    android:src="@drawable/ic_location" />
+
+                <TextView
+                    android:id="@+id/neighbour_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/neighbour_name"
+                    android:layout_marginTop="@dimen/marginBetweenElements"
+                    android:layout_toEndOf="@id/icon_location"
+                    android:text="Address" />
+
+
+                <ImageView
+                    android:id="@+id/icon_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/icon_location"
+                    android:layout_marginStart="@dimen/icon_margin"
+                    android:layout_marginTop="@dimen/marginBetweenElements"
+                    android:layout_marginEnd="@dimen/icon_margin"
+                    android:src="@drawable/ic_phone" />
+
+                <TextView
+                    android:id="@+id/neighbour_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/neighbour_address"
+                    android:layout_marginTop="@dimen/marginBetweenElements"
+                    android:layout_toEndOf="@id/icon_phone"
+                    android:text="06 00 00 00 00" />
+
+                <ImageView
+                    android:id="@+id/icon_network"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/icon_phone"
+                    android:layout_marginStart="@dimen/icon_margin"
+                    android:layout_marginTop="@dimen/marginBetweenElements"
+                    android:src="@drawable/ic_network" />
+
+                <TextView
+                    android:id="@+id/neighbour_network"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/neighbour_phone"
+                    android:layout_marginTop="@dimen/marginBetweenElements"
+                    android:layout_toEndOf="@id/icon_network"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/facebook" />
+
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/second_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            app:cardCornerRadius="1dp"
+            app:cardMaxElevation="20sp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/aboutMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/about"
+                    android:textColor="@color/lightBlack"
+                    android:textSize="@dimen/maintextSize" />
+
+                <TextView
+                    android:id="@+id/aboutMe_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="A propos de moi"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/marginBetweenElements" />
+
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</android.support.v4.widget.NestedScrollView>
