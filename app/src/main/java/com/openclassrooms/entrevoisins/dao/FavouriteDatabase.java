@@ -1,9 +1,11 @@
 package com.openclassrooms.entrevoisins.dao;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.openclassrooms.entrevoisins.model.Favourite;
 
@@ -26,5 +28,6 @@ public abstract class FavouriteDatabase extends RoomDatabase {
 
         return instance;
     }
-    
+
+
 }
