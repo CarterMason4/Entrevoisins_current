@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.service;
+package com.openclassrooms.entrevoisins.service.Neighbour;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 

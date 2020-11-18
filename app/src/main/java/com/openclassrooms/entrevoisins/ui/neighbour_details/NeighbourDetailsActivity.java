@@ -1,12 +1,12 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_details;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.dao.viewModel.FavouriteViewModel;
+import com.openclassrooms.entrevoisins.model.Favourite;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 public class NeighbourDetailsActivity extends AppCompatActivity {
+
+    private FavouriteViewModel favouriteViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +43,23 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         TextView neighbour_aboutMe = findViewById(R.id.aboutMe_text);
         FloatingActionButton fab = findViewById(R.id.fab);
 
+        favouriteViewModel = ViewModelProviders.of(this).get(FavouriteViewModel.class);
+
+        // On récupère l'intent utilisé pour passer de la liste complète à
+        // l'activité de détails.
 
         Intent intent = getIntent();
+
+        // Déclaration et instanciation d'un objet Neighbour
+
         Neighbour n = null;
 
+        // Vérification afin d'éviter d'éviter les NullPointerException.
 
         if(intent != null) {
             if(intent.getExtras() != null) {
                 n = intent.getParcelableExtra("neighbour");
-
                 toolbar.setTitle(n.getName());
-
             }
         }
 
@@ -78,6 +88,8 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             } else {
                 fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
             }
+
+
 
         });
 
@@ -109,10 +121,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
 
                 }
-
-
-
-
             }
         }
 

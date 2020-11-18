@@ -2,6 +2,8 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourGenerator;
+import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;

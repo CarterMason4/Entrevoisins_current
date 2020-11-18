@@ -17,6 +17,9 @@ public class Favourite implements Parcelable {
     @ColumnInfo(name = "neighbour_id_column")
     private long n_id;
 
+    @ColumnInfo(name = "neighbour_name")
+    private String name;
+
     @ColumnInfo(name = "neighbour_avatarUrl")
     private String avatarUrl;
 
@@ -29,17 +32,15 @@ public class Favourite implements Parcelable {
     @ColumnInfo(name = "neighbour_aboutMe")
     private String aboutMe;
 
-    @ColumnInfo(name = "neighbour_priority")
-    private int priority;
+    // TODO Idée d'amélioration : passer directement un objet "Neighbour" au lieu de variables.
 
-    public Favourite(int id, long n_id, String avatarUrl, String address, String phoneNumber, String aboutMe, int priority) {
-        setId(id);
+    public Favourite(long n_id, String name, String avatarUrl, String address, String phoneNumber, String aboutMe) {
         setN_id(n_id);
+        setName(name);
         setAvatarUrl(avatarUrl);
         setAddress(address);
         setPhoneNumber(phoneNumber);
         setAboutMe(aboutMe);
-        setPriority(priority);
     }
 
     public int getId() {
@@ -49,6 +50,8 @@ public class Favourite implements Parcelable {
     public long getN_id() {
         return n_id;
     }
+
+    public String getName() { return name; }
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -66,9 +69,8 @@ public class Favourite implements Parcelable {
         return aboutMe;
     }
 
-    public int getPriority() {
-        return priority;
-    }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -77,6 +79,8 @@ public class Favourite implements Parcelable {
     public void setN_id(long n_id) {
         this.n_id = n_id;
     }
+
+    public void setName(String name) { this.name = name; }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
@@ -94,9 +98,6 @@ public class Favourite implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
 
 
     @Override
@@ -112,7 +113,6 @@ public class Favourite implements Parcelable {
         dest.writeString(this.address);
         dest.writeString(this.phoneNumber);
         dest.writeString(this.aboutMe);
-        dest.writeInt(this.priority);
     }
 
     public Favourite() { }
@@ -124,7 +124,6 @@ public class Favourite implements Parcelable {
         this.address = in.readString();
         this.phoneNumber = in.readString();
         this.aboutMe = in.readString();
-        this.priority = in.readInt();
     }
 
     public static final Creator<Favourite> CREATOR = new Creator<Favourite>() {

@@ -18,7 +18,7 @@ public class FavouriteRepository {
     public FavouriteRepository (Application application) {
         FavouriteDatabase database = FavouriteDatabase.getInstance(application);
         dao = database.fdao();
-        allFavourites = dao.getAllFavourites();
+       // allFavourites = dao.getAllFavourites();
     }
 
     public void insert(Favourite f) {
@@ -29,6 +29,7 @@ public class FavouriteRepository {
     public void delete(Favourite f) {
         new DeleteFavouriteAsyncTask(dao).execute(f);
     }
+
 
     public LiveData<List<Favourite>> getAllFavourites() {
         return allFavourites;

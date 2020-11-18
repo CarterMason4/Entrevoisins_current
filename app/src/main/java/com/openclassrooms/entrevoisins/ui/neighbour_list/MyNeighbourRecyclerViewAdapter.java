@@ -2,12 +2,14 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -48,9 +50,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(v ->
+       holder.mDeleteButton.setOnClickListener(v ->
                 EventBus.getDefault()
                         .post(new DeleteNeighbourEvent(neighbour)));
+
 
         holder.itemView.setOnClickListener(v -> {
 
@@ -67,11 +70,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_list_avatar)
+        @BindView(R.id.favourite_avatar)
         public ImageView mNeighbourAvatar;
-        @BindView(R.id.item_list_name)
+        @BindView(R.id.favourite_name)
         public TextView mNeighbourName;
-        @BindView(R.id.item_list_delete_button)
+        @BindView(R.id.favourites_list_delete_button)
         public ImageButton mDeleteButton;
 
         public ViewHolder(View view) {

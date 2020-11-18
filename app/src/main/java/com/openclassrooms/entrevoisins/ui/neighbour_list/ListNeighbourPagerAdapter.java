@@ -1,11 +1,10 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.ui.favoris_list.FavouritesFragment;
 
 import java.util.ArrayList;
 import java.util.List;

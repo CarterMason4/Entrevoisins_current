@@ -19,7 +19,8 @@ public interface FavouriteDao {
     @Delete
     void delete(Favourite favourite);
 
-    @Query("SELECT * FROM favourites_table ORDER BY neighbour_priority DESC")
-    LiveData<List<Favourite>> getAllFavourites();
+    @Query("DELETE FROM favourites_table")
+    void deleteAll();
+
 
 }
