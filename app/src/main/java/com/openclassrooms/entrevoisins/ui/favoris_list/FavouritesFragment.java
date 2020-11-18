@@ -23,6 +23,8 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 public class FavouritesFragment extends Fragment {
@@ -31,6 +33,7 @@ public class FavouritesFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private FavouriteApiService mApiService;
+    private FavouritesAdapter fAdapter;
 
 
 
@@ -68,7 +71,8 @@ public class FavouritesFragment extends Fragment {
 
     private void initList() {
         favourites = mApiService.getFavourites();
-        recyclerView.setAdapter(new FavouritesAdapter(favourites));
+        fAdapter = new FavouritesAdapter(favourites);
+        recyclerView.setAdapter(fAdapter);
     }
 
 
@@ -78,14 +82,9 @@ public class FavouritesFragment extends Fragment {
         initList();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    public FavouritesAdapter getAdapter() {
+        return fAdapter;
     }
 
 

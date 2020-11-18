@@ -19,6 +19,7 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Favourite;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
+import com.openclassrooms.entrevoisins.ui.favoris_list.FavouritesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,8 +78,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         }
 
 
-        fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
-
 
         // SI le voisin que l'on veut ajouter est déjà présent dans les favoris ALORS
             // l'icône du bouton sera dorée
@@ -91,9 +90,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
         boolean presence = false;
 
-
         for(int i = 0 ; i < favouriteList.size() ; i++) {
-
             if(favouriteList.get(i).getN_id() == n.getId()) {
                 presence = true;
                 break;
@@ -103,28 +100,45 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         // Tout se joue dans le 'if-else' ci-dessus.
 
         if(presence) {
-            makeToast(n.getName() + " est dans les favoris.");
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
+
+            fab.setOnClickListener(v -> {
+                fApiService.deleteFavourite(convertNeighbourToFavourite(n));
+                fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
+                makeToast(n.getName() + " a été retiré(e)");
+
+
+            });
+
+
         } else {
-            makeToast(n.getName() + " n'est pas dans les favoris.");
+
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
+
+            fab.setOnClickListener(v -> {
+                fApiService.addFavourite(convertNeighbourToFavourite(n));
+                fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
+                makeToast(n.getName() + " a été ajouté(e) aux favoris.");
+            });
+
         }
 
+        fab2.setOnClickListener(v -> {
+
+            makeToast(favouriteList.toString());
+        });
 
 
 
-        fab.setOnClickListener(v -> {
+
+        /*fab.setOnClickListener(v -> {
 
 
-            fApiService.addFavourite(new Favourite(
-                    n.getId(),
-                    n.getName(),
-                    n.getAvatarUrl(),
-                    n.getAddress(),
-                    n.getPhoneNumber(),
-                    n.getAboutMe()));
+            fApiService.addFavourite(convertNeighbourToFavourite(n));
 
-            /*Toast toast = Toast.makeText(getApplicationContext(), n.getName() + " a ajouté à vos favoris", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), n.getName() + " a ajouté à vos favoris", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();*/
+            toast.show();
 
             Drawable d = fab.getDrawable();
 
@@ -139,19 +153,11 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
 
 
-        });
+        });*/
 
-        fab2.setOnClickListener(v -> {
-            Toast toast = Toast.makeText(getApplicationContext(), favouriteList.toString(), Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-        });
 
 
         // NEIGHBOUR
-
-
-
 
         if(intent != null) {
             if(intent.getExtras() != null) {
@@ -209,4 +215,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
+
+
 }
