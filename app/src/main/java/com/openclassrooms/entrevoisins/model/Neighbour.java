@@ -29,8 +29,6 @@ public class Neighbour implements Parcelable {
     private String aboutMe;
 
 
-    /**Room priority*/
-    private int priority;
 
 
 

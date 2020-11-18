@@ -13,14 +13,14 @@ public  abstract class DummyFavouriteGenerator {
     }
 
     public static List<Favourite> DUMMY_FAVOURITES = Arrays.asList(
-        new Favourite(1,
+        new Favourite(13,
                 "Aquaman",
                 "https://i.pravatar.cc/150?u=a042581f4e29026704c",
                 "44300 Nantes",
                 "0690565656",
                 "I love Rock'n'Roll "),
 
-            new Favourite(1,
+            new Favourite(14,
                     "Tony Stark",
                     "https://i.pravatar.cc/150?u=a042581f3e39026702d",
                     "Malibu Miami",

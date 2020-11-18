@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Favourite;
+import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
 
     private List<Favourite> favourites = new ArrayList<>();
+
+    private FavouriteApiService apiService;
 
     public FavouritesAdapter(List<Favourite> favourites) {
         this.favourites = favourites;
@@ -36,6 +40,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     public FavouritesHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View favouriteView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.favourites_item_layout, viewGroup, false);
+
+        apiService = DI.getFavouriteApiService();
 
         return new FavouritesHolder(favouriteView);
     }

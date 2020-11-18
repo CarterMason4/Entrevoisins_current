@@ -98,6 +98,18 @@ public class Favourite implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
+    @Override
+    public String toString() {
+        return new StringBuffer()
+                .append("ID : ").append(n_id).append('\n')
+                .append("Name : ").append(name).append('\n')
+                .append("URL : ").append(avatarUrl).append('\n')
+                .append("Adresse : ").append(address).append('\n')
+                .append("Phone number : ").append(phoneNumber).append('\n')
+                .append("About me : ").append(aboutMe).append('\n').toString();
+
+    }
+
 
 
     @Override
