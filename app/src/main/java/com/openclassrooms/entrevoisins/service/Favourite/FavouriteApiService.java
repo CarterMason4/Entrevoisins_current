@@ -24,6 +24,13 @@ public interface FavouriteApiService {
     void deleteFavourite(Favourite favourite);
 
     /**
+     * Deletes a favourite
+     * @param id
+     */
+    void deleteFavouriteById(long id);
+
+
+    /**
      * Add a favourite to the list.
      * @param favourite
      */

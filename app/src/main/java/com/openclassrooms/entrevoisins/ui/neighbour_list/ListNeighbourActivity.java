@@ -51,7 +51,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
                     fab.hide();
                 } else {
                     fab.show();
-
                 }
 
             }

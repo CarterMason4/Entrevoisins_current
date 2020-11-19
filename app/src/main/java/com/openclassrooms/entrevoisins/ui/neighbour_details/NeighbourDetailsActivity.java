@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.openclassrooms.entrevoisins.model.Favourite;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
 import com.openclassrooms.entrevoisins.ui.favoris_list.FavouritesFragment;
+import com.openclassrooms.entrevoisins.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +49,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         TextView neighbour_network = findViewById(R.id.neighbour_network);
         TextView neighbour_aboutMe = findViewById(R.id.aboutMe_text);
         FloatingActionButton fab = findViewById(R.id.fab);
-        FloatingActionButton fab2 = findViewById(R.id.fab2);
 
         fApiService = DI.getFavouriteApiService();
         favouriteList = fApiService.getFavourites();
@@ -79,81 +80,25 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
 
 
-        // SI le voisin que l'on veut ajouter est déjà présent dans les favoris ALORS
-            // l'icône du bouton sera dorée
-              // SI l'utilisateur appuie sur le bouton et que le voisin est déjà présent
-              // ALORS on retire le voisin de la liste des favoris.
 
-        // SINON, on ajoute le voisin dans les favoris et on modifie l'icône du bouton
-
-        // *******
-
-        boolean presence = false;
-
-        for(int i = 0 ; i < favouriteList.size() ; i++) {
-            if(favouriteList.get(i).getN_id() == n.getId()) {
-                presence = true;
-                break;
-            }
+        if(estPresent(n.getId())) {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
+        } else {
+            fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
         }
 
-        // Tout se joue dans le 'if-else' ci-dessus.
+        fab.setOnClickListener(v -> {
 
-        if(presence) {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
-
-            fab.setOnClickListener(v -> {
-                fApiService.deleteFavourite(convertNeighbourToFavourite(n));
-                fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
-                makeToast(n.getName() + " a été retiré(e)");
-
-
-            });
-
-
-        } else {
-
-            fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
-
-            fab.setOnClickListener(v -> {
-                fApiService.addFavourite(convertNeighbourToFavourite(n));
+            if(estPresent(n.getId())) {
+                makeToast(n.getName() + " se trouve déjà dans les favoris.");
+            } else {
+                fApiService.addFavourite(Utils.convertNeighbourToFavorite(n));
                 fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
                 makeToast(n.getName() + " a été ajouté(e) aux favoris.");
-            });
-
-        }
-
-        fab2.setOnClickListener(v -> {
-
-            makeToast(favouriteList.toString());
-        });
-
-
-
-
-        /*fab.setOnClickListener(v -> {
-
-
-            fApiService.addFavourite(convertNeighbourToFavourite(n));
-
-            Toast toast = Toast.makeText(getApplicationContext(), n.getName() + " a ajouté à vos favoris", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
-
-            Drawable d = fab.getDrawable();
-
-
-            if(d.getConstantState() == (getResources().getDrawable(R.drawable.ic_star_filled).getConstantState())) {
-
-               fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
-
-            } else {
-                fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
             }
 
 
-
-        });*/
+        });
 
 
 
@@ -200,20 +145,23 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
     }
 
-    private Favourite convertNeighbourToFavourite(Neighbour n) {
-        return new Favourite(
-                n.getId(),
-                n.getName(),
-                n.getAvatarUrl(),
-                n.getAddress(),
-                n.getPhoneNumber(),
-                n.getAboutMe());
-    }
-
     private void makeToast(String string) {
         Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+    }
+
+    private boolean estPresent(long id) {
+        boolean presence = false;
+
+        for(int i = 0 ; i < favouriteList.size() ; i++) {
+            if(id == favouriteList.get(i).getN_id()) {
+                presence = true;
+                break;
+            }
+        }
+
+        return presence;
     }
 
 

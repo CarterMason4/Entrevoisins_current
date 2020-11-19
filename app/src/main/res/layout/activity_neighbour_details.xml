@@ -61,17 +61,4 @@
         app:backgroundTint="@color/white"
         android:src="@drawable/ic_star_unfilled"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|left|end"
-        android:layout_marginStart="10dp"
-        app:backgroundTint="@color/white"
-        android:src="@drawable/ic_star_unfilled"/>
-
-
 </android.support.design.widget.CoordinatorLayout>

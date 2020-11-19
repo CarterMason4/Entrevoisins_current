@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.favoris_list;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         apiService = DI.getFavouriteApiService();
 
         return new FavouritesHolder(favouriteView);
+
     }
 
     @Override
@@ -59,13 +61,9 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         holder.name.setText(favourite.getName());
 
         holder.deleteButton.setOnClickListener(v -> {
-            Toast toast = Toast.makeText(holder.deleteButton.getContext(),"je supprime", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            toast.show();
+            apiService.deleteFavourite(favourite);
+            notifyDataSetChanged();
         });
-
-
-
 
     }
 

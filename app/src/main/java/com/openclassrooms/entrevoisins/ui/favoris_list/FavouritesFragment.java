@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +65,6 @@ public class FavouritesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
-
         return view;
     }
 
@@ -76,16 +76,13 @@ public class FavouritesFragment extends Fragment {
     }
 
 
+
     @Override
     public void onResume() {
         super.onResume();
         initList();
     }
 
-
-    public FavouritesAdapter getAdapter() {
-        return fAdapter;
-    }
 
 
 }

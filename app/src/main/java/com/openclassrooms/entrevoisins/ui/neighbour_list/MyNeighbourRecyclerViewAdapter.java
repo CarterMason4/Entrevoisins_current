@@ -16,7 +16,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.Favourite.DummyFavouriteApiService;
+import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
+import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourApiService;
+import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourDetailsActivity;
+import com.openclassrooms.entrevoisins.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,6 +34,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
 
+    private FavouriteApiService apiService;
+
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
     }
@@ -37,6 +44,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour, parent, false);
+
+        apiService = new DummyFavouriteApiService();
 
         return new ViewHolder(view);
     }
@@ -50,9 +59,18 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
-       holder.mDeleteButton.setOnClickListener(v ->
-                EventBus.getDefault()
-                        .post(new DeleteNeighbourEvent(neighbour)));
+       holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               apiService.deleteFavouriteById(neighbour.getId());
+
+               EventBus.getDefault()
+                       .post(new DeleteNeighbourEvent(neighbour));
+
+
+           }
+       });
 
 
         holder.itemView.setOnClickListener(v -> {

@@ -15,9 +15,26 @@ public class DummyFavouriteApiService implements FavouriteApiService {
 
     @Override
     public void deleteFavourite(Favourite favourite) {
-        // On récupère l'ID passé en paramèter.
-        // On vérifie
         favourites.remove(favourite);
+    }
+
+    @Override
+    public void deleteFavouriteById(long id) {
+
+        boolean correspondance = false;
+        Favourite favourite = null;
+
+        for(int i = 0 ; i < favourites.size() ; i++) {
+            if(id == favourites.get(i).getN_id()) {
+                correspondance = true;
+                favourite = favourites.get(i);
+                break;
+            }
+        }
+
+        if(correspondance) {
+            favourites.remove(favourite);
+        }
     }
 
     @Override
