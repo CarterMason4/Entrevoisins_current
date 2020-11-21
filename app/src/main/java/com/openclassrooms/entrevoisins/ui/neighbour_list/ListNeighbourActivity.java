@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourApiService;
+import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +32,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
 
     ListNeighbourPagerAdapter mPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,4 +73,5 @@ public class ListNeighbourActivity extends AppCompatActivity {
     void addNeighbour() {
         AddNeighbourActivity.navigate(this);
     }
+
 }

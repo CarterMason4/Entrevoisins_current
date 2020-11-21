@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.favoris_list;
 
+import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -89,4 +90,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
         }
     }
+
+
 }
