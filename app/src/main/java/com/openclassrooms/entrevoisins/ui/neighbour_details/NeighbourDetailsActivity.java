@@ -124,7 +124,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                     neighbour_network.setText(network_string);
                     neighbour_aboutMe.setText(n.getAboutMe());
 
-
                 }
             }
         }
