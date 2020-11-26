@@ -16,9 +16,14 @@ import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.DeleteFavouriteEvent;
+import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,19 +86,35 @@ public class FavouritesFragment extends Fragment {
     }
 
     private void initList() {
-        favourites = nApiService.getNeighbours();
+        favourites = nApiService.getFavouriteNeighbours();
         fAdapter = new FavouritesAdapter(favourites);
         recyclerView.setAdapter(fAdapter);
     }
 
 
-
-    private void makeToast(Context context, String s) {
-        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * Fired if the user clicks on a delete button
+     * @param event
+     */
+
+
+    @Subscribe
+    public void onDeleteFavourite(DeleteFavouriteEvent event) {
+        nApiService.deleteNeighbourFromFavourite(event.neighbour);
+        initList();
+    }
 
 
 }

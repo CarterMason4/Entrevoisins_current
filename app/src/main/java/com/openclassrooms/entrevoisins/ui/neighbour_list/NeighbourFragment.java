@@ -106,10 +106,5 @@ public class NeighbourFragment extends Fragment {
         initList();
     }
 
-    private void makeToast(Context context, String s) {
-        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
 
 }

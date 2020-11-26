@@ -48,10 +48,5 @@ public interface NeighbourApiService {
     * */
     List<Neighbour> getFavouriteNeighbours();
 
-    /**
-     * Check if a neighbour is a favourite.
-     * @param id
-     * */
-    boolean isFavourite(long id);
 
 }

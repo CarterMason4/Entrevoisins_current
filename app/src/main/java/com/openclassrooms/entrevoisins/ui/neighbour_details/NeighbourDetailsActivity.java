@@ -33,7 +33,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     private NeighbourApiService nApiService;
     private Neighbour neighbour;
     private List<Neighbour> neighboursList = new ArrayList<>();
-    private boolean hasBeenPressed;
 
     @BindView(R.id.toolbar_details)
     Toolbar toolbar;
@@ -60,7 +59,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
 
         nApiService = DI.getNeighbourApiService();
         neighboursList = nApiService.getNeighbours();
-        printFavourites();
 
 
         // On récupère l'intent utilisé pour passer de la liste complète à

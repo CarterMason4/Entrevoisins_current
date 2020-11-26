@@ -73,16 +73,4 @@ public class DummyNeighbourApiService implements NeighbourApiService {
         return favourites;
     }
 
-    @Override
-    public boolean isFavourite(long id) {
-        boolean isFavourite = false;
-
-        for(Neighbour neighbour : neighbours) {
-            if(id == neighbour.getId()) {
-                isFavourite = true;
-                break;
-            }
-        }
-        return isFavourite;
-    }
 }

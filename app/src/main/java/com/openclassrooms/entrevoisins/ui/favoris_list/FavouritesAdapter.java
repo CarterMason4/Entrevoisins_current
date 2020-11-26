@@ -16,8 +16,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.DeleteFavouriteEvent;
+import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.DetailsNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +57,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
 
     @Override
-    public void onBindViewHolder(@NonNull FavouritesHolder holder, int i) {
-            Neighbour neighbour = neighbours.get(i);
+    public void onBindViewHolder(@NonNull FavouritesHolder holder, int position) {
+            Neighbour neighbour = neighbours.get(position);
 
             Glide.with(holder.avatar.getContext())
                     .load(neighbour.getAvatarUrl())
@@ -64,8 +69,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
             holder.name.setText(neighbour.getName());
 
             holder.deleteButton.setOnClickListener(v -> {
-                nApiService.deleteNeighbourFromFavourite(neighbours.get(i));
-                notifyItemRemoved(i);
+                EventBus.getDefault().
+                        post(new DeleteFavouriteEvent(neighbour));
             });
     }
 
@@ -92,13 +97,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
             ButterKnife.bind(this, itemView);
         }
     }
-
-    private void makeToast(Context context, String s) {
-        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
-
 
 
 }
