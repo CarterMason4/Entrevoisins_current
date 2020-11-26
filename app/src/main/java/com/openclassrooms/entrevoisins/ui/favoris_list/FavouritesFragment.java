@@ -8,24 +8,19 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteFavouriteEvent;
-import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavouritesFragment extends Fragment {
@@ -33,11 +28,8 @@ public class FavouritesFragment extends Fragment {
     private List<Neighbour> favourites;
     private RecyclerView recyclerView;
 
-    private NeighbourApiService nApiService;
-    private FavouritesAdapter fAdapter;
-
-    private MyNeighbourRecyclerViewAdapter neighbourAdapter;
-
+    private NeighbourApiService neighbourApiService;
+    private FavouritesAdapter favouritesAdapter;
 
     /**
      * Create and return a new instance
@@ -51,8 +43,7 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nApiService = DI.getNeighbourApiService();
-
+        neighbourApiService = DI.getNeighbourApiService();
     }
 
     @Nullable
@@ -86,9 +77,9 @@ public class FavouritesFragment extends Fragment {
     }
 
     private void initList() {
-        favourites = nApiService.getFavouriteNeighbours();
-        fAdapter = new FavouritesAdapter(favourites);
-        recyclerView.setAdapter(fAdapter);
+        favourites = neighbourApiService.getFavouriteNeighbours();
+        favouritesAdapter = new FavouritesAdapter(favourites);
+        recyclerView.setAdapter(favouritesAdapter);
     }
 
 
@@ -108,11 +99,9 @@ public class FavouritesFragment extends Fragment {
      * Fired if the user clicks on a delete button
      * @param event
      */
-
-
     @Subscribe
     public void onDeleteFavourite(DeleteFavouriteEvent event) {
-        nApiService.deleteNeighbourFromFavourite(event.neighbour);
+        neighbourApiService.deleteNeighbourFromFavourite(event.neighbour);
         initList();
     }
 

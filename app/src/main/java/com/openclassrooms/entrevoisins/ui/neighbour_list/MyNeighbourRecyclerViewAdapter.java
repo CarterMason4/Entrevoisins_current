@@ -32,7 +32,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
 
-
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
     }
@@ -54,21 +53,16 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.mDeleteButton.setOnClickListener(v ->
                 EventBus.getDefault()
-                        .post(new DeleteNeighbourEvent(neighbour));
-            }
-        });
+                .post(new DeleteNeighbourEvent(neighbour)));
 
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v ->
             EventBus.getDefault().
                     post(new DetailsNeighbourEvent(neighbour,
                             holder.itemView.getContext(),
-                            NeighbourDetailsActivity.class));
-        });
+                            NeighbourDetailsActivity.class)));
 
     }
 
@@ -91,8 +85,4 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             ButterKnife.bind(this, view);
         }
     }
-
-
-
-
 }
