@@ -1,15 +1,12 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_details;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,60 +14,79 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.model.Favourite;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
-import com.openclassrooms.entrevoisins.ui.favoris_list.FavouritesFragment;
-import com.openclassrooms.entrevoisins.utils.Utils;
+import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
+
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NeighbourDetailsActivity extends AppCompatActivity {
 
+    private NeighbourApiService nApiService;
+    private Neighbour neighbour;
+    private List<Neighbour> neighboursList = new ArrayList<>();
+    private boolean hasBeenPressed;
 
-    private FavouriteApiService fApiService;
-    private Neighbour n;
-
-    private List<Favourite> favouriteList = new ArrayList<>();
+    @BindView(R.id.toolbar_details)
+    Toolbar toolbar;
+    @BindView(R.id.avatar)
+    ImageView avatar;
+    @BindView(R.id.neighbour_address)
+    TextView neighbour_address;
+    @BindView(R.id.neighbour_name)
+    TextView neighbour_name;
+    @BindView(R.id.neighbour_phone)
+    TextView neighbour_phone;
+    @BindView(R.id.neighbour_network)
+    TextView neighbour_network;
+    @BindView(R.id.aboutMe_text)
+    TextView neighbour_aboutMe;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neighbour_details);
+        ButterKnife.bind(this);
 
-        // Identification de tous les élements graphiques à utiliser.
-
-        Toolbar toolbar = findViewById(R.id.toolbar_details);
-        ImageView avatar = findViewById(R.id.avatar);
-        TextView neighbour_address = findViewById(R.id.neighbour_address);
-        TextView neighbour_name = findViewById(R.id.neighbour_name);
-        TextView neighbour_phone = findViewById(R.id.neighbour_phone);
-        TextView neighbour_network = findViewById(R.id.neighbour_network);
-        TextView neighbour_aboutMe = findViewById(R.id.aboutMe_text);
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fApiService = DI.getFavouriteApiService();
-        favouriteList = fApiService.getFavourites();
+        nApiService = DI.getNeighbourApiService();
+        neighboursList = nApiService.getNeighbours();
+        printFavourites();
 
 
         // On récupère l'intent utilisé pour passer de la liste complète à
         // l'activité de détails.
-
         Intent intent = getIntent();
 
-        // Déclaration et instanciation d'un objet Neighbour
-
-
-        // Vérification afin d'éviter d'éviter les NullPointerException.
-
+        // Vérification afin d'éviter les NullPointerException.
         if(intent != null) {
             if(intent.getExtras() != null) {
-                n = intent.getParcelableExtra("neighbour");
-                toolbar.setTitle(n.getName());
+                neighbour = intent.getParcelableExtra("neighbour");
+                toolbar.setTitle(neighbour.getName());
+
+                Glide.with(this)
+                        .load(neighbour.getAvatarUrl())
+                        .fitCenter()
+                        .into(avatar);
+
+                neighbour_address.setText(neighbour.getAddress());
+                neighbour_name.setText(neighbour.getName());
+                neighbour_phone.setText(neighbour.getPhoneNumber());
+
+                String network_string = getString(R.string.facebook) + firstToLower(neighbour.getName());
+                neighbour_network.setText(network_string);
+                neighbour_aboutMe.setText(neighbour.getAboutMe());
             }
         }
-
 
         setSupportActionBar(toolbar);
 
@@ -78,90 +94,70 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
-
-
-        if(estPresent(n.getId())) {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
-        } else {
-            fab.setImageDrawable(getDrawable(R.drawable.ic_star_unfilled));
-        }
+        int starImageId = neighbour.estFavori() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
+        fab.setImageDrawable(getDrawable(starImageId));
 
         fab.setOnClickListener(v -> {
+            String message = neighbour.getName() + ' ';
 
-            if(estPresent(n.getId())) {
-                makeToast(n.getName() + " se trouve déjà dans les favoris.");
+            if(!neighbour.estFavori()) {
+                nApiService.addNeighbourToFavourite(neighbour);
+                message += getString(R.string.ajoute);
+                neighbour.setFavori(true);
             } else {
-                fApiService.addFavourite(Utils.convertNeighbourToFavorite(n));
-                fab.setImageDrawable(getDrawable(R.drawable.ic_star_filled));
-                makeToast(n.getName() + " a été ajouté(e) aux favoris.");
+                nApiService.deleteNeighbourFromFavourite(neighbour);
+                message += getString(R.string.retire);
+                neighbour.setFavori(false);
             }
 
-
+            int imageId = neighbour.estFavori() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
+            fab.setImageDrawable(getDrawable(imageId));
+            makeToast(message);
         });
-
-
-
-        // NEIGHBOUR
-
-        if(intent != null) {
-            if(intent.getExtras() != null) {
-
-                if(n != null) {
-
-                    // Chargement de l'avatar avec Glide.
-
-                    Glide.with(this)
-                            .load(n.getAvatarUrl())
-                            .fitCenter()
-                            .into(avatar);
-
-                    neighbour_address.setText(n.getAddress());
-                    neighbour_name.setText(n.getName());
-                    neighbour_phone.setText(n.getPhoneNumber());
-
-                    String network_string = getString(R.string.facebook) + "/" + firstToLower(n.getName());
-                    neighbour_network.setText(network_string);
-                    neighbour_aboutMe.setText(n.getAboutMe());
-
-                }
-            }
-        }
-
-
-
-
-
     }
 
 
-    private String firstToLower(String string) {
+
+
+
+    @Subscribe
+    public String firstToLower(String string) {
         char[] lettres = string.toCharArray();
 
         lettres[0] = Character.toLowerCase(lettres[0]);
 
         return new String(lettres);
-
     }
 
-    private void makeToast(String string) {
-        Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    // @Subscribe
+    public void makeToast(String string) {
+        Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 
-    private boolean estPresent(long id) {
-        boolean presence = false;
 
-        for(int i = 0 ; i < favouriteList.size() ; i++) {
-            if(id == favouriteList.get(i).getN_id()) {
-                presence = true;
-                break;
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void printFavourites() {
+        List<Neighbour> favourites = new ArrayList<>();
+
+        for(Neighbour neighbour : neighboursList) {
+            if(neighbour.estFavori()) {
+                favourites.add(neighbour);
             }
         }
 
-        return presence;
+        makeToast(favourites.toString());
     }
-
-
 }

@@ -28,7 +28,8 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
-
+    /** Dans la listes des favoris.*/
+    private boolean estFavori;
 
 
 
@@ -40,16 +41,20 @@ public class Neighbour implements Parcelable {
      * @param address
      * @param phoneNumber
      * @param aboutMe
+     * @param estFavori
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe) {
+                     String phoneNumber, String aboutMe, boolean estFavori) {
         setId(id);
         setName(name);
         setAvatarUrl(avatarUrl);
         setAddress(address);
         setPhoneNumber(phoneNumber);
         setAboutMe(aboutMe);
+        setFavori(estFavori);
     }
+
+
 
     public long getId() {
         return id;
@@ -73,6 +78,10 @@ public class Neighbour implements Parcelable {
 
     public String getAboutMe() {
         return aboutMe;
+    }
+
+    public boolean estFavori() {
+        return estFavori;
     }
 
 
@@ -102,6 +111,10 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
+    public void setFavori(boolean estFavori) {
+        this.estFavori = estFavori;
+    }
+
 
     @Override
     public String toString() {
@@ -111,8 +124,9 @@ public class Neighbour implements Parcelable {
                 .append("Name : ").append(name).append('\n')
                 .append("Address : ").append(address).append('\n')
                 .append("Phone number : ").append(phoneNumber).append('\n')
-                .append("About me : ").append(aboutMe).append('\n').
-                        toString();
+                .append("About me : ").append(aboutMe).append('\n')
+                .append(" Est favori : ") .append(estFavori)
+                .toString();
 
     }
 
@@ -129,35 +143,36 @@ public class Neighbour implements Parcelable {
         return Objects.hash(id);
     }
 
+    protected Neighbour(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        avatarUrl = in.readString();
+        address = in.readString();
+        phoneNumber = in.readString();
+        aboutMe = in.readString();
+        estFavori = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(avatarUrl);
+        dest.writeString(address);
+        dest.writeString(phoneNumber);
+        dest.writeString(aboutMe);
+        dest.writeByte((byte) (estFavori ? 1 : 0));
+    }
 
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.avatarUrl);
-        dest.writeString(this.address);
-        dest.writeString(this.phoneNumber);
-        dest.writeString(this.aboutMe);
-    }
-
-    protected Neighbour(Parcel in) {
-        this.id = in.readLong();
-        this.name = in.readString();
-        this.avatarUrl = in.readString();
-        this.address = in.readString();
-        this.phoneNumber = in.readString();
-        this.aboutMe = in.readString();
-    }
-
     public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
         @Override
-        public Neighbour createFromParcel(Parcel source) {
-            return new Neighbour(source);
+        public Neighbour createFromParcel(Parcel in) {
+            return new Neighbour(in);
         }
 
         @Override
@@ -165,4 +180,7 @@ public class Neighbour implements Parcelable {
             return new Neighbour[size];
         }
     };
+
+
+
 }

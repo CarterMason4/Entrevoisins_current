@@ -56,7 +56,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
                 } else {
                     fab.show();
                 }
-
             }
 
             @Override

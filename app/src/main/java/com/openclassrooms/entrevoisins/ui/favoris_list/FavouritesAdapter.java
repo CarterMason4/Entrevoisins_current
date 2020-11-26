@@ -1,10 +1,8 @@
 package com.openclassrooms.entrevoisins.ui.favoris_list;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,21 +16,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.model.Favourite;
-import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouritesHolder> {
 
 
-    private List<Favourite> favourites = new ArrayList<>();
+    private List<Neighbour> neighbours = new ArrayList<>();
 
-    private FavouriteApiService apiService;
+    private NeighbourApiService nApiService;
 
-    public FavouritesAdapter(List<Favourite> favourites) {
-        this.favourites = favourites;
+
+    public FavouritesAdapter(List<Neighbour> neighbours) {
+        this.neighbours = neighbours;
     }
 
 
@@ -43,53 +45,60 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         View favouriteView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.favourites_item_layout, viewGroup, false);
 
-        apiService = DI.getFavouriteApiService();
+        nApiService = DI.getNeighbourApiService();
 
         return new FavouritesHolder(favouriteView);
-
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull FavouritesHolder holder, int i) {
-        Favourite favourite = favourites.get(i);
+            Neighbour neighbour = neighbours.get(i);
 
-        Glide.with(holder.avatar.getContext())
-                .load(favourite.getAvatarUrl())
-                .fitCenter()
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.avatar);
+            Glide.with(holder.avatar.getContext())
+                    .load(neighbour.getAvatarUrl())
+                    .fitCenter()
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.avatar);
 
-        holder.name.setText(favourite.getName());
+            holder.name.setText(neighbour.getName());
 
-        holder.deleteButton.setOnClickListener(v -> {
-            apiService.deleteFavourite(favourite);
-            notifyDataSetChanged();
-        });
-
+            holder.deleteButton.setOnClickListener(v -> {
+                nApiService.deleteNeighbourFromFavourite(neighbours.get(i));
+                notifyItemRemoved(i);
+            });
     }
+
+
 
     @Override
     public int getItemCount() {
-        return favourites.size();
+        return neighbours.size();
     }
 
 
     class FavouritesHolder extends RecyclerView.ViewHolder {
 
-        private ImageView avatar;
-        private TextView name;
-        private ImageButton deleteButton;
+        @BindView(R.id.favourite_avatar)
+        public ImageView avatar;
+        @BindView(R.id.favourite_name)
+        public TextView name;
+        @BindView(R.id.favourites_list_delete_button)
+        public ImageButton deleteButton;
 
 
         public FavouritesHolder(@NonNull View itemView) {
             super(itemView);
-
-            avatar = itemView.findViewById(R.id.favourite_avatar);
-            name = itemView.findViewById(R.id.favourite_name);
-            deleteButton = itemView.findViewById(R.id.favourites_list_delete_button);
-
+            ButterKnife.bind(this, itemView);
         }
     }
+
+    private void makeToast(Context context, String s) {
+        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+    }
+
 
 
 }

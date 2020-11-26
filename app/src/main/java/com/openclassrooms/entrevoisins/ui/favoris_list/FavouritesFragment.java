@@ -16,23 +16,22 @@ import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
-import com.openclassrooms.entrevoisins.model.Favourite;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.Favourite.FavouriteApiService;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
+import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavouritesFragment extends Fragment {
 
-    private List<Favourite> favourites;
+    private List<Neighbour> favourites;
     private RecyclerView recyclerView;
 
-    private FavouriteApiService fApiService;
     private NeighbourApiService nApiService;
     private FavouritesAdapter fAdapter;
 
+    private MyNeighbourRecyclerViewAdapter neighbourAdapter;
 
 
     /**
@@ -47,15 +46,13 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fApiService = DI.getFavouriteApiService();
-        nApiService= DI.getNeighbourApiService();
+        nApiService = DI.getNeighbourApiService();
 
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
 
         View view = inflater.inflate(R.layout.fragment_favourites_list, container, false);
 
@@ -64,23 +61,31 @@ public class FavouritesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
-
         return view;
     }
 
-    private void initList() {
-        favourites = fApiService.getFavourites();
-        fAdapter = new FavouritesAdapter(favourites);
-        recyclerView.setAdapter(fAdapter);
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(isVisibleToUser) {
+            initList();
+        }
     }
-
-
 
     @Override
     public void onResume() {
         super.onResume();
         initList();
     }
+
+    private void initList() {
+        favourites = nApiService.getNeighbours();
+        fAdapter = new FavouritesAdapter(favourites);
+        recyclerView.setAdapter(fAdapter);
+    }
+
 
 
     private void makeToast(Context context, String s) {

@@ -98,5 +98,7 @@
 
     <string name="about">À propos de moi</string>
 
-    <string name="facebook">www.facebook.com</string>
+    <string name="facebook">www.facebook.com/</string>
+    <string name="ajoute">a été ajouté(e) aux favoris.</string>
+    <string name="retire">a été retiré(e) des favoris.</string>
 </resources>

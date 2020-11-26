@@ -20,6 +20,7 @@ import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -54,7 +55,6 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
-
         return view;
     }
 
@@ -70,6 +70,11 @@ public class NeighbourFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+        if(mRecyclerView != null) {
+            if(isVisibleToUser) {
+                initList();
+            }
+        }
     }
 
     @Override
@@ -101,5 +106,10 @@ public class NeighbourFragment extends Fragment {
         initList();
     }
 
+    private void makeToast(Context context, String s) {
+        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+    }
 
 }
