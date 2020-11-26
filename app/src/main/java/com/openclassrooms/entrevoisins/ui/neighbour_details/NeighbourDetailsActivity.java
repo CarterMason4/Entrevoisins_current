@@ -22,7 +22,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -92,23 +91,23 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        int starImageId = neighbour.estFavori() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
+        int starImageId = neighbour.isFavourite() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
         fab.setImageDrawable(getDrawable(starImageId));
 
         fab.setOnClickListener(v -> {
             String message = neighbour.getName() + ' ';
 
-            if(!neighbour.estFavori()) {
+            if(!neighbour.isFavourite()) {
                 nApiService.addNeighbourToFavourite(neighbour);
                 message += getString(R.string.ajoute);
-                neighbour.setFavori(true);
+                neighbour.setFavourite(true);
             } else {
                 nApiService.deleteNeighbourFromFavourite(neighbour);
                 message += getString(R.string.retire);
-                neighbour.setFavori(false);
+                neighbour.setFavourite(false);
             }
 
-            int imageId = neighbour.estFavori() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
+            int imageId = neighbour.isFavourite() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
             fab.setImageDrawable(getDrawable(imageId));
             makeToast(message);
         });
@@ -151,7 +150,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         List<Neighbour> favourites = new ArrayList<>();
 
         for(Neighbour neighbour : neighboursList) {
-            if(neighbour.estFavori()) {
+            if(neighbour.isFavourite()) {
                 favourites.add(neighbour);
             }
         }

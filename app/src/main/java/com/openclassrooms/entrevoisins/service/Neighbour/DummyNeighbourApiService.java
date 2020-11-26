@@ -1,7 +1,5 @@
 package com.openclassrooms.entrevoisins.service.Neighbour;
 
-import android.widget.Toast;
-
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     public void addNeighbourToFavourite(Neighbour neighbour) {
         for(Neighbour loopNeighobur : neighbours) {
             if(neighbour.equals(loopNeighobur)) {
-                loopNeighobur.setFavori(true);
+                loopNeighobur.setFavourite(true);
                 break;
             }
         }
@@ -55,7 +53,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     public void deleteNeighbourFromFavourite(Neighbour neighbour) {
         for(Neighbour loopNeighbour : neighbours) {
             if(neighbour.equals(loopNeighbour)) {
-                loopNeighbour.setFavori(false);
+                loopNeighbour.setFavourite(false);
                 break;
             }
         }
@@ -66,7 +64,7 @@ public class DummyNeighbourApiService implements NeighbourApiService {
         List<Neighbour> favourites = new ArrayList<>();
 
         for(Neighbour neighbour : neighbours) {
-            if(neighbour.estFavori()) {
+            if(neighbour.isFavourite()) {
                 favourites.add(neighbour);
             }
         }

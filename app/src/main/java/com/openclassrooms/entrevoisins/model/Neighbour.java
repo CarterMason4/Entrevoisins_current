@@ -29,7 +29,7 @@ public class Neighbour implements Parcelable {
     private String aboutMe;
 
     /** Dans la listes des favoris.*/
-    private boolean estFavori;
+    private boolean isFavourite;
 
 
 
@@ -41,17 +41,17 @@ public class Neighbour implements Parcelable {
      * @param address
      * @param phoneNumber
      * @param aboutMe
-     * @param estFavori
+     * @param isFavourite
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe, boolean estFavori) {
+                     String phoneNumber, String aboutMe, boolean isFavourite) {
         setId(id);
         setName(name);
         setAvatarUrl(avatarUrl);
         setAddress(address);
         setPhoneNumber(phoneNumber);
         setAboutMe(aboutMe);
-        setFavori(estFavori);
+        setFavourite(isFavourite);
     }
 
 
@@ -80,8 +80,8 @@ public class Neighbour implements Parcelable {
         return aboutMe;
     }
 
-    public boolean estFavori() {
-        return estFavori;
+    public boolean isFavourite() {
+        return isFavourite;
     }
 
 
@@ -111,8 +111,8 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    public void setFavori(boolean estFavori) {
-        this.estFavori = estFavori;
+    public void setFavourite(boolean estFavori) {
+        this.isFavourite = estFavori;
     }
 
 
@@ -125,7 +125,7 @@ public class Neighbour implements Parcelable {
                 .append("Address : ").append(address).append('\n')
                 .append("Phone number : ").append(phoneNumber).append('\n')
                 .append("About me : ").append(aboutMe).append('\n')
-                .append(" Est favori : ") .append(estFavori)
+                .append("Is Favourite : ") .append(isFavourite)
                 .toString();
 
     }
@@ -150,7 +150,7 @@ public class Neighbour implements Parcelable {
         address = in.readString();
         phoneNumber = in.readString();
         aboutMe = in.readString();
-        estFavori = in.readByte() != 0;
+        isFavourite = in.readByte() != 0;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class Neighbour implements Parcelable {
         dest.writeString(address);
         dest.writeString(phoneNumber);
         dest.writeString(aboutMe);
-        dest.writeByte((byte) (estFavori ? 1 : 0));
+        dest.writeByte((byte) (isFavourite ? 1 : 0));
     }
 
     @Override
