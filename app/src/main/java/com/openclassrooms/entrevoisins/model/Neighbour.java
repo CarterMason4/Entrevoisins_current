@@ -111,8 +111,8 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    public void setFavourite(boolean estFavori) {
-        this.isFavourite = estFavori;
+    public void setFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
     }
 
 
