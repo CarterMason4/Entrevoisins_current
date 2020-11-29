@@ -28,7 +28,7 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
-    /** Dans la listes des favoris.*/
+    /** Is favourite or not*/
     private boolean isFavourite;
 
 
@@ -83,8 +83,6 @@ public class Neighbour implements Parcelable {
     public boolean isFavourite() {
         return isFavourite;
     }
-
-
 
 
     public void setId(long id) {
