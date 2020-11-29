@@ -105,9 +105,4 @@ public class NeighbourServiceTest {
 
     }
 
-
-    // TODO TESTS A ECRIRE CI-DESSOUS
-    // TODO Supprimer un favori et vérifier que le voisin en question n'ait pas été supprimé.
-
-
 }
