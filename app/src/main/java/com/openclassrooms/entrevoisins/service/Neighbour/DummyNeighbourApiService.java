@@ -41,9 +41,9 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
     @Override
     public void addNeighbourToFavourite(Neighbour neighbour) {
-        for(Neighbour loopNeighobur : neighbours) {
-            if(neighbour.equals(loopNeighobur)) {
-                loopNeighobur.setFavourite(true);
+        for(Neighbour loopNeighbour : neighbours) {
+            if(neighbour.equals(loopNeighbour)) {
+                loopNeighbour.setFavourite(true);
                 break;
             }
         }

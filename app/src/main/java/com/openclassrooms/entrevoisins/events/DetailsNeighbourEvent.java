@@ -1,10 +1,5 @@
 package com.openclassrooms.entrevoisins.events;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.Gravity;
-import android.widget.Toast;
-
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 public class DetailsNeighbourEvent {
@@ -20,13 +15,8 @@ public class DetailsNeighbourEvent {
      * Constructor
      * @param neighbour
      * */
-
-    public DetailsNeighbourEvent(Neighbour neighbour, Context context, Class targetClass) {
+    public DetailsNeighbourEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
-
-        Intent intent = new Intent(context, targetClass);
-        intent.putExtra("neighbour", this.neighbour);
-        context.startActivity(intent);
     }
 
 

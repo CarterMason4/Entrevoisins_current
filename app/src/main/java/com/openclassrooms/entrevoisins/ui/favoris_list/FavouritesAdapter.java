@@ -1,24 +1,19 @@
 package com.openclassrooms.entrevoisins.ui.favoris_list;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteFavouriteEvent;
-import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.DetailsNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
@@ -84,11 +79,11 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
     class FavouritesHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.favourite_avatar)
+        @BindView(R.id.neighbour_avatar)
         public ImageView avatar;
-        @BindView(R.id.favourite_name)
+        @BindView(R.id.mNeighbour_name)
         public TextView name;
-        @BindView(R.id.favourites_list_delete_button)
+        @BindView(R.id.neighbours_list_delete_button)
         public ImageButton deleteButton;
 
 

@@ -1,15 +1,12 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -17,8 +14,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DetailsNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourApiService;
-import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourDetailsActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,9 +55,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
         holder.itemView.setOnClickListener(v ->
             EventBus.getDefault().
-                    post(new DetailsNeighbourEvent(neighbour,
-                            holder.itemView.getContext(),
-                            NeighbourDetailsActivity.class)));
+                    post(new DetailsNeighbourEvent(neighbour)));
 
     }
 
@@ -73,11 +66,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.favourite_avatar)
+        @BindView(R.id.neighbour_avatar)
         public ImageView mNeighbourAvatar;
-        @BindView(R.id.favourite_name)
+        @BindView(R.id.mNeighbour_name)
         public TextView mNeighbourName;
-        @BindView(R.id.favourites_list_delete_button)
+        @BindView(R.id.neighbours_list_delete_button)
         public ImageButton mDeleteButton;
 
         public ViewHolder(View view) {

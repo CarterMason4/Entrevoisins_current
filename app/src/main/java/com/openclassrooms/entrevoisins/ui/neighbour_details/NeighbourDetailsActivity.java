@@ -94,6 +94,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         int starImageId = neighbour.isFavourite() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
         fab.setImageDrawable(getDrawable(starImageId));
 
+        // TODO Mettre la ligne 98 à 112 dans une méthode.
         fab.setOnClickListener(v -> {
             String message = neighbour.getName() + ' ';
 
@@ -113,11 +114,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
-    @Subscribe
     public String firstToLower(String string) {
         char[] lettres = string.toCharArray();
 
@@ -126,13 +122,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         return new String(lettres);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
 
-    // @Subscribe
     public void makeToast(String string) {
         Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -140,12 +130,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
+    // TODO A supprimer
     private void printFavourites() {
         List<Neighbour> favourites = new ArrayList<>();
 

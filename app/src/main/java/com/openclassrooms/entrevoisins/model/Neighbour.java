@@ -56,6 +56,7 @@ public class Neighbour implements Parcelable {
 
 
 
+
     public long getId() {
         return id;
     }
@@ -114,9 +115,9 @@ public class Neighbour implements Parcelable {
     }
 
 
+
     @Override
     public String toString() {
-
         return new StringBuffer()
                 .append("ID : ").append(id).append('\n')
                 .append("Name : ").append(name).append('\n')
@@ -125,7 +126,6 @@ public class Neighbour implements Parcelable {
                 .append("About me : ").append(aboutMe).append('\n')
                 .append("Is Favourite : ") .append(isFavourite)
                 .toString();
-
     }
 
     @Override

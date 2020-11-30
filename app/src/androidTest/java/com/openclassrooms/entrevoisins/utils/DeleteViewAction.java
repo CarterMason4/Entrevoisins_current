@@ -21,7 +21,7 @@ public class DeleteViewAction implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
-        View button = view.findViewById(R.id.favourites_list_delete_button);
+        View button = view.findViewById(R.id.neighbours_list_delete_button);
         // Maybe check for null
         button.performClick();
     }
