@@ -113,7 +113,6 @@ public class Neighbour implements Parcelable {
         this.isFavourite = isFavourite;
     }
 
-
     @Override
     public String toString() {
         return new StringBuffer()
@@ -159,6 +158,8 @@ public class Neighbour implements Parcelable {
         dest.writeString(aboutMe);
         dest.writeByte((byte) (isFavourite ? 1 : 0));
     }
+    
+    
 
     @Override
     public int describeContents() {

@@ -17,10 +17,6 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +55,30 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         nApiService = DI.getNeighbourApiService();
         neighboursList = nApiService.getNeighbours();
 
+        populateViews();
 
-        // On récupère l'intent utilisé pour passer de la liste complète à
-        // l'activité de détails.
+        setSupportActionBar(toolbar);
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        fab.setImageDrawable(getDrawable(getImageId(neighbour.isFavourite())));
+
+        operateButton();
+    }
+
+    /**
+     *  Big chunks of the code are placed in methods/functions
+     * in order for the onCreate() method to be cleaner.
+     * */
+
+    private void populateViews() {
+        // We get the intent used to go from the complete list
+        // to the neighbour details activity.
         Intent intent = getIntent();
 
-        // Vérification afin d'éviter les NullPointerException.
+        // Check for NullPointerException
         if(intent != null) {
             if(intent.getExtras() != null) {
                 neighbour = intent.getParcelableExtra("neighbour");
@@ -84,17 +98,9 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 neighbour_aboutMe.setText(neighbour.getAboutMe());
             }
         }
-
-        setSupportActionBar(toolbar);
-
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        int starImageId = neighbour.isFavourite() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
-        fab.setImageDrawable(getDrawable(starImageId));
-
-        // TODO Mettre la ligne 98 à 112 dans une méthode.
+    }
+    
+    private void operateButton() {
         fab.setOnClickListener(v -> {
             String message = neighbour.getName() + ' ';
 
@@ -108,38 +114,28 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 neighbour.setFavourite(false);
             }
 
-            int imageId = neighbour.isFavourite() ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
-            fab.setImageDrawable(getDrawable(imageId));
+            fab.setImageDrawable(getDrawable(getImageId(neighbour.isFavourite())));
             makeToast(message);
         });
     }
 
-    public String firstToLower(String string) {
-        char[] lettres = string.toCharArray();
+    private String firstToLower(String string) {
+        char[] letters = string.toCharArray();
 
-        lettres[0] = Character.toLowerCase(lettres[0]);
+        letters[0] = Character.toLowerCase(letters[0]);
 
-        return new String(lettres);
+        return new String(letters);
     }
 
 
-    public void makeToast(String string) {
+    private void makeToast(String string) {
         Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 
-
-    // TODO A supprimer
-    private void printFavourites() {
-        List<Neighbour> favourites = new ArrayList<>();
-
-        for(Neighbour neighbour : neighboursList) {
-            if(neighbour.isFavourite()) {
-                favourites.add(neighbour);
-            }
-        }
-
-        makeToast(favourites.toString());
+    private int getImageId(boolean myBoolean) {
+        return myBoolean ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
     }
+
 }
