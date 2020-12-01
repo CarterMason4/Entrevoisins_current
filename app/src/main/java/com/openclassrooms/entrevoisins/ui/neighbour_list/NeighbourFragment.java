@@ -7,11 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -23,7 +21,6 @@ import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourDetailsActi
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -80,7 +77,8 @@ public class NeighbourFragment extends Fragment {
         }
     }
 
-    @Override
+
+
     public void onResume() {
         super.onResume();
         initList();
@@ -108,6 +106,13 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
+
+
+    /**
+     * Fired if the user clicks on a item
+     * @param event
+     */
+
 
     @Subscribe
     public void onDetailsNeighbour(DetailsNeighbourEvent event) {

@@ -45,4 +45,5 @@ public abstract class DummyNeighbourGenerator {
         return new Neighbour(DUMMY_NEIGHBOURS.size() + 1, "Tony", "https://i.pravatar.cc/150?u=a042581f4e29026704e", "Saint-Pierre-du-Mont ; 5km",
                 "+33 6 86 57 90 14",  "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..", false);
     }
+
 }

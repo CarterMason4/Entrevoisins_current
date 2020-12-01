@@ -56,7 +56,6 @@ public class Neighbour implements Parcelable {
 
 
 
-
     public long getId() {
         return id;
     }
@@ -113,7 +112,6 @@ public class Neighbour implements Parcelable {
     public void setFavourite(boolean isFavourite) {
         this.isFavourite = isFavourite;
     }
-
 
 
     @Override
