@@ -3,6 +3,10 @@ package com.openclassrooms.entrevoisins.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Toast;
+
+import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
+
 import java.util.Objects;
 
 /**
@@ -53,7 +57,6 @@ public class Neighbour implements Parcelable {
         setAboutMe(aboutMe);
         setFavourite(isFavourite);
     }
-
 
 
     public long getId() {
