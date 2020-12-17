@@ -74,11 +74,9 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
      * */
 
     private void populateViews() {
-        // We get the intent used to go from the complete list
-        // to the neighbour details activity.
+
         Intent intent = getIntent();
 
-        // Check for NullPointerException
         if(intent != null) {
             if(intent.getExtras() != null) {
                 neighbour = intent.getParcelableExtra("neighbour");
@@ -96,9 +94,11 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 String network_string = getString(R.string.facebook) + firstToLower(neighbour.getName());
                 neighbour_network.setText(network_string);
                 neighbour_aboutMe.setText(neighbour.getAboutMe());
+
             }
         }
     }
+
     
     private void operateButton() {
         fab.setOnClickListener(v -> {
@@ -137,5 +137,4 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     private int getImageId(boolean myBoolean) {
         return myBoolean ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
     }
-
 }
