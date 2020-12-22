@@ -17,6 +17,7 @@ import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerView
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 import com.openclassrooms.entrevoisins.utils.RecyclerViewMatcher;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.core.content.pm.ApplicationInfoBuilder;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -64,7 +66,7 @@ public class NeighboursListTest {
     private static int ITEMS_COUNT = 12;
 
     private ListNeighbourActivity mActivity;
-    private NeighbourDetailsActivity detailsActivity;
+
 
    @Rule
     public IntentsTestRule<ListNeighbourActivity> mActivityRule = new IntentsTestRule(ListNeighbourActivity.class);
@@ -72,13 +74,15 @@ public class NeighboursListTest {
    /* @Rule
     public ActivityScenario activityScenario = ActivityScenario.launch(NeighbourDetailsActivity.class);*/
 
-    @Rule
-    public IntentsTestRule<NeighbourDetailsActivity> detailsActivityRule = new IntentsTestRule(NeighbourDetailsActivity.class);
+//    @Rule
+//    public IntentsTestRule<NeighbourDetailsActivity> detailsActivityRule = new IntentsTestRule(NeighbourDetailsActivity.class);
 
 
     @Rule
-    public ActivityTestRule<NeighbourDetailsActivity> rule =
+    public ActivityTestRule<NeighbourDetailsActivity> detailsActivity =
             new ActivityTestRule(NeighbourDetailsActivity.class, true, false);
+
+
 
 
     @Before
@@ -92,9 +96,10 @@ public class NeighboursListTest {
         /*detailsActivity = detailsActivityRule.getActivity();
         assertThat(detailsActivity, notNullValue());*/
 
-        detailsActivity = rule.getActivity();
-        assertThat(detailsActivity, notNullValue());
+        /*detailsActivity = rule.getActivity();
+        assertThat(detailsActivity, notNullValue());*/
     }
+
 
     /**
      * We ensure that our recyclerview is displaying at least one item
@@ -133,14 +138,12 @@ public class NeighboursListTest {
         // ActivityTestRule rule = new ActivityTestRule(NeighbourDetailsActivity.class);
 
        // rule.launchActivity(rule.getActivity().getIntent());
-        int ITEM_IN_LIST = 4;
-        Neighbour neighbour = generateNeighbours().get(ITEM_IN_LIST);
+        Neighbour neighbour = generateNeighbours().get(0);
 
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        Intent intent = new Intent(detailsActivityRule.getActivity(), NeighbourDetailsActivity.class);
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), NeighbourDetailsActivity.class);
         intent.putExtra("neighbour", neighbour);
 
-        detailsActivityRule.launchActivity(intent);
+        detailsActivity.launchActivity(intent);
 
         onView(withId(R.id.details_layout)).check(matches(isDisplayed()));
 
@@ -149,6 +152,7 @@ public class NeighboursListTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(item_in_test, click()));*/
 
         // Neighbour neighbour = rule.getActivity().getIntent().getParcelableExtra("neighbour");
+
 
         onView(withId(R.id.neighbour_name)).check(matches(withText(neighbour.getName())));
     }
