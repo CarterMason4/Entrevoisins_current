@@ -5,12 +5,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.TimedText;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.RecyclerViewUtils.RecyclerViewUtils;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourApiService;
 import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourGenerator;
+import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourDetailsActivity;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
@@ -23,11 +27,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.core.content.pm.ApplicationInfoBuilder;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.contrib.ViewPagerActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -49,6 +58,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.RecyclerViewUtils.RecyclerViewUtils.clickChildView;
 import static com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourGenerator.*;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNotNull;
@@ -67,37 +79,18 @@ public class NeighboursListTest {
 
     private ListNeighbourActivity mActivity;
 
-
    @Rule
     public IntentsTestRule<ListNeighbourActivity> mActivityRule = new IntentsTestRule(ListNeighbourActivity.class);
-
-   /* @Rule
-    public ActivityScenario activityScenario = ActivityScenario.launch(NeighbourDetailsActivity.class);*/
-
-//    @Rule
-//    public IntentsTestRule<NeighbourDetailsActivity> detailsActivityRule = new IntentsTestRule(NeighbourDetailsActivity.class);
-
 
     @Rule
     public ActivityTestRule<NeighbourDetailsActivity> detailsActivity =
             new ActivityTestRule(NeighbourDetailsActivity.class, true, false);
 
 
-
-
     @Before
     public void setUp() {
-       /* mActivity = mActivityRule.getActivity();
-        assertThat(mActivity, notNullValue());*/
-
-        /*detailsActivity = detailsActivityRule.getActivity();
-        assertThat(detailsActivityRule, notNullValue());*/
-
-        /*detailsActivity = detailsActivityRule.getActivity();
-        assertThat(detailsActivity, notNullValue());*/
-
-        /*detailsActivity = rule.getActivity();
-        assertThat(detailsActivity, notNullValue());*/
+       mActivity = mActivityRule.getActivity();
+        assertThat(mActivity, notNullValue());
     }
 
 
@@ -135,9 +128,6 @@ public class NeighboursListTest {
     @Test
     public void checkIfDetailsScreenIsWorkingWhenItemClicked() {
 
-        // ActivityTestRule rule = new ActivityTestRule(NeighbourDetailsActivity.class);
-
-       // rule.launchActivity(rule.getActivity().getIntent());
         Neighbour neighbour = generateNeighbours().get(0);
 
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), NeighbourDetailsActivity.class);
@@ -147,14 +137,26 @@ public class NeighboursListTest {
 
         onView(withId(R.id.details_layout)).check(matches(isDisplayed()));
 
-
-        /*onView(withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(item_in_test, click()));*/
-
-        // Neighbour neighbour = rule.getActivity().getIntent().getParcelableExtra("neighbour");
-
-
         onView(withId(R.id.neighbour_name)).check(matches(withText(neighbour.getName())));
+    }
+
+    /**
+     * Check if, when swiped right, the favourites fragment contains
+     * only the favourite neighbours.
+     *
+     * */
+
+    @Test
+    public void checkIfFavouritesFragmentContainsFavouritesNeighbour() {
+        NeighbourApiService apiService = new DummyNeighbourApiService();
+        List<Neighbour> favouriteNeighbours = apiService.getFavouriteNeighbours();
+
+
+        onView(withId(R.id.container)).perform(ViewPagerActions.scrollLeft());
+        onView(withId(R.id.list_favoris)).check(matches(isDisplayed()));
+
+
+        //onData(allOf(is(instanceOf(Neighbour.class))));
     }
 
 

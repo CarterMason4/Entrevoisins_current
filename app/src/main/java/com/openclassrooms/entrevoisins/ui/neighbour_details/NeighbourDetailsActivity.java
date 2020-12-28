@@ -94,12 +94,10 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 String network_string = getString(R.string.facebook) + firstToLower(neighbour.getName());
                 neighbour_network.setText(network_string);
                 neighbour_aboutMe.setText(neighbour.getAboutMe());
-
             }
         }
     }
 
-    
     private void operateButton() {
         fab.setOnClickListener(v -> {
             String message = neighbour.getName() + ' ';
@@ -127,7 +125,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
         return new String(letters);
     }
 
-
     private void makeToast(String string) {
         Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -137,4 +134,5 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     private int getImageId(boolean myBoolean) {
         return myBoolean ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
     }
+
 }

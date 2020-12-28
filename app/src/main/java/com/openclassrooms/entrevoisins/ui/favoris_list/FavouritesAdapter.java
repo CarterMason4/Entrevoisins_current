@@ -63,10 +63,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
             holder.name.setText(neighbour.getName());
 
-            holder.deleteButton.setOnClickListener(v -> {
-                EventBus.getDefault().
-                        post(new DeleteFavouriteEvent(neighbour));
-            });
+            holder.deleteButton.setOnClickListener(v -> EventBus.getDefault().
+                    post(new DeleteFavouriteEvent(neighbour)));
     }
 
 
@@ -92,6 +90,4 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
             ButterKnife.bind(this, itemView);
         }
     }
-
-
 }

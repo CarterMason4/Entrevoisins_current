@@ -51,7 +51,7 @@ public class NeighbourServiceTest {
     public void addNeighbourWithSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
 
-        // We create a new neighbour and add to the main list.
+        // We create a new neighbour and add it to the main list.
         Neighbour newNeighbour = generateNeighbour();
         service.createNeighbour(newNeighbour);
 
