@@ -94,6 +94,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 String network_string = getString(R.string.facebook) + firstToLower(neighbour.getName());
                 neighbour_network.setText(network_string);
                 neighbour_aboutMe.setText(neighbour.getAboutMe());
+
             }
         }
     }
@@ -134,5 +135,4 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     private int getImageId(boolean myBoolean) {
         return myBoolean ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
     }
-
 }

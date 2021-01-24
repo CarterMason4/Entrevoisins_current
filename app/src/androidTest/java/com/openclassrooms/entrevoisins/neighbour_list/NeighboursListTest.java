@@ -138,6 +138,7 @@ public class NeighboursListTest {
         onView(withId(R.id.details_layout)).check(matches(isDisplayed()));
 
         onView(withId(R.id.neighbour_name)).check(matches(withText(neighbour.getName())));
+
     }
 
     /**
@@ -151,12 +152,23 @@ public class NeighboursListTest {
         NeighbourApiService apiService = new DummyNeighbourApiService();
         List<Neighbour> favouriteNeighbours = apiService.getFavouriteNeighbours();
 
-
         onView(withId(R.id.container)).perform(ViewPagerActions.scrollLeft());
         onView(withId(R.id.list_favoris)).check(matches(isDisplayed()));
 
 
+
+
         //onData(allOf(is(instanceOf(Neighbour.class))));
+
+        // onView sur chaque élément
+        // onData que la valeur est bien celle qui est attendu.
+
+        // Ajouter des éléments dans le setUp
+        // Vérifier taille du RecyclerView et vérifier la valeur de tel ou tel élément à telle position.
+
+        // allOf avec la vue et la description.
+
+        // Assurer
     }
 
 
