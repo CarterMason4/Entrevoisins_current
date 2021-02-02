@@ -17,11 +17,13 @@ public class ListNeighbourHelper {
     private static final int TAB_INDEX_ONLY_FAVORITE_NEIGHBOUR = 1;
 
     // Permet de recherche R.id.list_neighbours sur le bon onglet (tous les voisins ou uniquement les favoris)
-    // Sinon problème de "matches"
+    // Sinon pb de "matches"
     private static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
         return new TypeSafeMatcher<View>() {
 
             int currentIndex = 0;
+
+
 
             @Override
             public void describeTo(org.hamcrest.Description description) {
@@ -38,7 +40,7 @@ public class ListNeighbourHelper {
     }
 
     private static ViewInteraction getListNeighbour(int tabIndex){
-        return onView(withIndex(withId(R.id.list_neighbours), tabIndex));
+        return onView(withIndex(withId(R.id.tabs), tabIndex));
     }
 
     public static ViewInteraction getAllNeighbour(){
@@ -48,4 +50,5 @@ public class ListNeighbourHelper {
     public static ViewInteraction getFavoriteNeighbour(){
         return getListNeighbour(TAB_INDEX_ONLY_FAVORITE_NEIGHBOUR);
     }
+
 }

@@ -18,9 +18,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
@@ -31,6 +30,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     }
 
     @Override
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour, parent, false);
@@ -65,16 +65,16 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.neighbour_avatar)
         public ImageView mNeighbourAvatar;
-        @BindView(R.id.mNeighbour_name)
         public TextView mNeighbourName;
-        @BindView(R.id.neighbours_list_delete_button)
         public ImageButton mDeleteButton;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this, view);
+            mNeighbourAvatar = view.findViewById(R.id.favourites_neighbour_avatar);
+            mNeighbourName = view.findViewById(R.id.mNeighbour_name);
+            mDeleteButton = view.findViewById(R.id.neighbours_list_delete_button);
+
         }
     }
 }

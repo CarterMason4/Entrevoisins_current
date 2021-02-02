@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.RecyclerViewUtils.MyAssertion;
 import com.openclassrooms.entrevoisins.RecyclerViewUtils.RecyclerViewUtils;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourApiService;
@@ -19,6 +20,7 @@ import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourDetailsActi
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
+import com.openclassrooms.entrevoisins.utils.ListNeighbourHelper;
 import com.openclassrooms.entrevoisins.utils.RecyclerViewMatcher;
 
 import org.junit.After;
@@ -34,6 +36,7 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.core.content.pm.ApplicationInfoBuilder;
 import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.contrib.ViewPagerActions;
@@ -79,6 +82,8 @@ public class NeighboursListTest {
 
     private ListNeighbourActivity mActivity;
 
+    private NeighbourApiService apiService;
+
    @Rule
     public IntentsTestRule<ListNeighbourActivity> mActivityRule = new IntentsTestRule(ListNeighbourActivity.class);
 
@@ -91,6 +96,9 @@ public class NeighboursListTest {
     public void setUp() {
        mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
+
+        apiService = new DummyNeighbourApiService();
+        apiService.addNeighbourToFavourite(DummyNeighbourGenerator.generateNeighbour());
     }
 
 
@@ -149,13 +157,15 @@ public class NeighboursListTest {
 
     @Test
     public void checkIfFavouritesFragmentContainsFavouritesNeighbour() {
-        NeighbourApiService apiService = new DummyNeighbourApiService();
-        List<Neighbour> favouriteNeighbours = apiService.getFavouriteNeighbours();
+        apiService.addNeighbourToFavourite(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
 
-        onView(withId(R.id.container)).perform(ViewPagerActions.scrollLeft());
-        onView(withId(R.id.list_favoris)).check(matches(isDisplayed()));
+        onView(withId(R.id.container)).perform(ViewActions.swipeLeft());
 
+        ViewInteraction recyclerViewViewInterAction = onView(withId(R.id.list_favoris));
+        recyclerViewViewInterAction.check(matches(isDisplayed()));
+        recyclerViewViewInterAction.check(new MyAssertion(1));
 
+        //onView(withId(R.id.list_favoris)).check(matches(hasMinimumChildCount(1)));
 
 
         //onData(allOf(is(instanceOf(Neighbour.class))));
@@ -164,11 +174,16 @@ public class NeighboursListTest {
         // onData que la valeur est bien celle qui est attendu.
 
         // Ajouter des éléments dans le setUp
-        // Vérifier taille du RecyclerView et vérifier la valeur de tel ou tel élément à telle position.
+        // Vérifier taille du RegfbyclerView et vérifier la valeur de tel ou tel élément à telle position.
 
         // allOf avec la vue et la description.
 
         // Assurer
+
+
+        // ListNeighbourHelper.getFavoriteNeighbour().check(matches(hasMinimumChildCount(1)));
+        
+        
     }
 
 

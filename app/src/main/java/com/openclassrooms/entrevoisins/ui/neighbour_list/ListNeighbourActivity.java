@@ -1,6 +1,9 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,12 +19,9 @@ import butterknife.OnClick;
 public class ListNeighbourActivity extends AppCompatActivity {
 
     // UI Components
-    @BindView(R.id.tabs)
-    TabLayout mTabLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.container)
-    ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private Toolbar mToolbar;
+    private ViewPager mViewPager;
 
 
     ListNeighbourPagerAdapter mPagerAdapter;
@@ -31,7 +31,10 @@ public class ListNeighbourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_neighbour);
-        ButterKnife.bind(this);
+
+        mTabLayout = findViewById(R.id.tabs);
+        mToolbar = findViewById(R.id.toolbar);
+        mViewPager = findViewById(R.id.container);
 
         FloatingActionButton fab = findViewById(R.id.add_neighbour);
 
@@ -58,12 +61,17 @@ public class ListNeighbourActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+        fab.setOnClickListener(view -> {
+            // Intent intent = new Intent(getApplicationContext(), AddNeighbourActivity.class);
+            startActivity(new Intent(getApplicationContext(), AddNeighbourActivity.class));
+        });
+
 
     }
 
-    @OnClick(R.id.add_neighbour)
-    void addNeighbour() {
+   /* @OnClick(R.id.add_neighbour)
+    public void addNeighbour() {
         AddNeighbourActivity.navigate(this);
-    }
+    }*/
 
 }

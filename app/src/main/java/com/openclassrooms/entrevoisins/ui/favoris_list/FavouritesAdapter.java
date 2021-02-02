@@ -11,10 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteFavouriteEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -22,16 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouritesHolder> {
 
 
     private List<Neighbour> neighbours = new ArrayList<>();
-
-    private NeighbourApiService nApiService;
-
 
     public FavouritesAdapter(List<Neighbour> neighbours) {
         this.neighbours = neighbours;
@@ -45,7 +38,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         View favouriteView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.favourites_item_layout, viewGroup, false);
 
-        nApiService = DI.getNeighbourApiService();
 
         return new FavouritesHolder(favouriteView);
     }
@@ -53,6 +45,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
     @Override
     public void onBindViewHolder(@NonNull FavouritesHolder holder, int position) {
+
             Neighbour neighbour = neighbours.get(position);
 
             Glide.with(holder.avatar.getContext())
@@ -77,17 +70,17 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
     class FavouritesHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.neighbour_avatar)
         public ImageView avatar;
-        @BindView(R.id.mNeighbour_name)
         public TextView name;
-        @BindView(R.id.neighbours_list_delete_button)
         public ImageButton deleteButton;
 
 
         public FavouritesHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+
+            avatar = itemView.findViewById(R.id.favourites_neighbour_avatar);
+            name = itemView.findViewById(R.id.mNeighbour_name);
+            deleteButton = itemView.findViewById(R.id.neighbours_list_delete_button);
         }
     }
 }

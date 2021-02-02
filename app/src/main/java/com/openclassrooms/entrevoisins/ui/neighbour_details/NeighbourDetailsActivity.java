@@ -3,6 +3,8 @@ package com.openclassrooms.entrevoisins.ui.neighbour_details;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Gravity;
@@ -20,6 +22,7 @@ import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,28 +32,30 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     private Neighbour neighbour;
     private List<Neighbour> neighboursList = new ArrayList<>();
 
-    @BindView(R.id.toolbar_details)
-    Toolbar toolbar;
-    @BindView(R.id.avatar)
-    ImageView avatar;
-    @BindView(R.id.neighbour_address)
-    TextView neighbour_address;
-    @BindView(R.id.neighbour_name)
-    TextView neighbour_name;
-    @BindView(R.id.neighbour_phone)
-    TextView neighbour_phone;
-    @BindView(R.id.neighbour_network)
-    TextView neighbour_network;
-    @BindView(R.id.aboutMe_text)
-    TextView neighbour_aboutMe;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+    private Toolbar toolbar;
+    private ImageView avatar;
+    private TextView neighbour_address;
+    private TextView neighbour_name;
+    private TextView neighbour_phone;
+    private TextView neighbour_network;
+    private TextView neighbour_aboutMe;
+    private FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_neighbour_details);
-        ButterKnife.bind(this);
+
+        toolbar = findViewById(R.id.toolbar_details);
+        avatar = findViewById(R.id.avatar);
+        neighbour_address = findViewById(R.id.neighbour_address);
+        neighbour_name = findViewById(R.id.neighbour_name);
+        neighbour_phone = findViewById(R.id.neighbour_phone);
+        neighbour_network = findViewById(R.id.neighbour_network);
+        neighbour_aboutMe = findViewById(R.id.aboutMe_text);
+        fab = findViewById(R.id.fab);
+
 
         nApiService = DI.getNeighbourApiService();
         neighboursList = nApiService.getNeighbours();
@@ -63,7 +68,7 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        fab.setImageDrawable(getDrawable(getImageId(neighbour.isFavourite())));
+        fab.setImageDrawable(ContextCompat.getDrawable(this, getImageId(neighbour.isFavourite())));
 
         operateButton();
     }
@@ -113,7 +118,8 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
                 neighbour.setFavourite(false);
             }
 
-            fab.setImageDrawable(getDrawable(getImageId(neighbour.isFavourite())));
+            fab.setImageDrawable(ContextCompat.getDrawable(this, getImageId(neighbour.isFavourite())));
+
             makeToast(message);
         });
     }
