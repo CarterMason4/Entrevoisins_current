@@ -1,16 +1,9 @@
 
 package com.openclassrooms.entrevoisins.neighbour_list;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.media.TimedText;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.RecyclerViewUtils.MyAssertion;
 import com.openclassrooms.entrevoisins.RecyclerViewUtils.RecyclerViewUtils;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourApiService;
@@ -18,51 +11,34 @@ import com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourGenerator
 import com.openclassrooms.entrevoisins.service.Neighbour.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourDetailsActivity;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
-import com.openclassrooms.entrevoisins.utils.ListNeighbourHelper;
-import com.openclassrooms.entrevoisins.utils.RecyclerViewMatcher;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.core.content.pm.ApplicationInfoBuilder;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.espresso.contrib.ViewPagerActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.actionWithAssertions;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withAlpha;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.RecyclerViewUtils.RecyclerViewUtils.clickChildView;
 import static com.openclassrooms.entrevoisins.service.Neighbour.DummyNeighbourGenerator.*;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsNull.notNullValue;
