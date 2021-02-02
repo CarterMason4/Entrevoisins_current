@@ -139,7 +139,6 @@ public class NeighboursListTest {
 
         ViewInteraction recyclerViewViewInterAction = onView(withId(R.id.list_favoris));
         recyclerViewViewInterAction.check(matches(isDisplayed()));
-        recyclerViewViewInterAction.check(new MyAssertion(1));
 
         //onView(withId(R.id.list_favoris)).check(matches(hasMinimumChildCount(1)));
 
