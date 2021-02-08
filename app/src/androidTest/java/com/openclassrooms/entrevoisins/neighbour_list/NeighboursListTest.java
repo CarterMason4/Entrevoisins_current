@@ -31,8 +31,10 @@ import androidx.test.rule.ActivityTestRule;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.RecyclerViewUtils.RecyclerViewUtils.clickChildView;
@@ -122,53 +124,36 @@ public class NeighboursListTest {
         onView(withId(R.id.details_layout)).check(matches(isDisplayed()));
 
         onView(withId(R.id.neighbour_name)).check(matches(withText(neighbour.getName())));
-
     }
 
     /**
-     * Check if, when swiped right, the favourites fragment contains
-     * only the favourite neighbours.
-     *
+     * Check if the favourites tab really contains favourite neighbours.
      * */
 
-    @Test
-    public void checkIfFavouritesFragmentContainsFavouritesNeighbour() {
-        apiService.addNeighbourToFavourite(DummyNeighbourGenerator.DUMMY_NEIGHBOURS.get(0));
 
+    @Test
+    public void checkIfSwipedLeftContainsFavourites() {
+        // Go the favorites list
         onView(withId(R.id.container)).perform(ViewActions.swipeLeft());
-
-        ViewInteraction recyclerViewViewInterAction = onView(withId(R.id.list_favoris));
-        recyclerViewViewInterAction.check(matches(isDisplayed()));
-
-        //onView(withId(R.id.list_favoris)).check(matches(hasMinimumChildCount(1)));
-
-
-        //onData(allOf(is(instanceOf(Neighbour.class))));
-
-        // onView sur chaque élément
-        // onData que la valeur est bien celle qui est attendu.
-
-        // Ajouter des éléments dans le setUp
-        // Vérifier taille du RegfbyclerView et vérifier la valeur de tel ou tel élément à telle position.
-
-        // allOf avec la vue et la description.
-
-        // Assurer
-
-
-        // ListNeighbourHelper.getFavoriteNeighbour().check(matches(hasMinimumChildCount(1)));
-        
-        
+        // Check that favorites list is displayed
+        onView(withId(R.id.list_favoris)).check(matches(isDisplayed()));
+        // Check that the favorites list is empty
+        onView(withId(R.id.list_favoris)).check(matches(hasChildCount(0)));
+        // Back to neighbours list
+        onView(withId(R.id.container)).perform(ViewActions.swipeRight());
+        // Click on the first item of neighbours list to open the details activity
+        onView(withId(R.id.list_neighbours)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // Click the fab button to add this neighbour in favorite list
+        onView(withId(R.id.fab)).perform(click());
+        // Navigate back to the main view
+        onView(withContentDescription("Navigate up")).perform(click());
+        // Go the favorites list
+        onView(withId(R.id.container)).perform(ViewActions.swipeLeft());
+        // Check that favorites list is displayed
+        onView(withId(R.id.list_favoris)).check(matches(isDisplayed()));
+        // Check that the favorites list has 1 item
+        onView(withId(R.id.list_favoris)).check(matches(hasChildCount(1)));
     }
 
 
-    /**Check if the delete button works properly*/
-
-    @Test
-    public void checkIfRemovingNeighbourIsWorking() {
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildView(R.id.neighbours_list_delete_button)));
-
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(new RecyclerViewUtils.ItemCount(ITEMS_COUNT - 1));
-    }
 }
