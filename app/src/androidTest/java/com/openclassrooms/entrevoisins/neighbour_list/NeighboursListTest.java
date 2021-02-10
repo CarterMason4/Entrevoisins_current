@@ -60,7 +60,6 @@ public class NeighboursListTest {
 
     private ListNeighbourActivity mActivity;
 
-    private NeighbourApiService apiService;
 
    @Rule
     public IntentsTestRule<ListNeighbourActivity> mActivityRule = new IntentsTestRule(ListNeighbourActivity.class);
@@ -74,9 +73,6 @@ public class NeighboursListTest {
     public void setUp() {
        mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-
-        apiService = new DummyNeighbourApiService();
-        apiService.addNeighbourToFavourite(DummyNeighbourGenerator.generateNeighbour());
     }
 
 
