@@ -38,6 +38,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Neighbour neighbour = mNeighbours.get(position);
@@ -74,7 +75,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             mNeighbourAvatar = view.findViewById(R.id.favourites_neighbour_avatar);
             mNeighbourName = view.findViewById(R.id.mNeighbour_name);
             mDeleteButton = view.findViewById(R.id.neighbours_list_delete_button);
-
         }
     }
 }

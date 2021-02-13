@@ -150,6 +150,5 @@ public class NeighboursListTest {
         // Check that the favorites list has 1 item
         onView(withId(R.id.list_favoris)).check(matches(hasChildCount(1)));
     }
-
-
+    
 }

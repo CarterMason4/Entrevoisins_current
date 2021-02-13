@@ -43,8 +43,9 @@ public interface NeighbourApiService {
     void deleteNeighbourFromFavourite(Neighbour neighbour);
 
 
-    /*
+    /**
     * Retrieve all the neighbours that are marked as favourite
+     * @return {@link List}
     * */
     List<Neighbour> getFavouriteNeighbours();
 

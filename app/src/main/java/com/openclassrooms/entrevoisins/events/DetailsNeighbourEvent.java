@@ -18,6 +18,4 @@ public class DetailsNeighbourEvent {
     public DetailsNeighbourEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
     }
-
-
 }

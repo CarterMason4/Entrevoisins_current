@@ -162,7 +162,6 @@ public class Neighbour implements Parcelable {
         dest.writeByte((byte) (isFavourite ? 1 : 0));
     }
     
-    
 
     @Override
     public int describeContents() {
@@ -180,7 +179,5 @@ public class Neighbour implements Parcelable {
             return new Neighbour[size];
         }
     };
-
-
 
 }
