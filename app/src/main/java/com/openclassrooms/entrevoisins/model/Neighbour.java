@@ -116,6 +116,10 @@ public class Neighbour implements Parcelable {
         this.isFavourite = isFavourite;
     }
 
+    public void test() {
+
+    }
+
     @Override
     public String toString() {
         return new StringBuffer()

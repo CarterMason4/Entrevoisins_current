@@ -50,4 +50,6 @@ public interface NeighbourApiService {
     List<Neighbour> getFavouriteNeighbours();
 
 
+
+
 }
