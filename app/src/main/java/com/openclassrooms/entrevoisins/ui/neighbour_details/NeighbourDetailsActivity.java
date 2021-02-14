@@ -139,6 +139,6 @@ public class NeighbourDetailsActivity extends AppCompatActivity {
     }
 
     private int getImageId(boolean myBoolean) {
-        return myBoolean ? R.drawable.ic_star_filled : R.drawable.ic_star_unfilled;
+        return myBoolean ? R.drawable.star_icon_filled : R.drawable.star_icon_unfilled;
     }
 }
