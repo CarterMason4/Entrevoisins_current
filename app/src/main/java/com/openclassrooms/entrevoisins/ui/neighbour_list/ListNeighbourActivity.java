@@ -62,16 +62,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
         });
 
         fab.setOnClickListener(view -> {
-            // Intent intent = new Intent(getApplicationContext(), AddNeighbourActivity.class);
             startActivity(new Intent(getApplicationContext(), AddNeighbourActivity.class));
         });
-
-
     }
-
-   /* @OnClick(R.id.add_neighbour)
-    public void addNeighbour() {
-        AddNeighbourActivity.navigate(this);
-    }*/
-
 }
