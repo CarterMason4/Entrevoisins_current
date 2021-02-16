@@ -53,9 +53,10 @@ public class NeighbourServiceTest {
 
         // We create a new neighbour and add it to the main list.
         Neighbour newNeighbour = generateNeighbour();
+
         service.createNeighbour(newNeighbour);
 
-        assertEquals(neighbours.get(neighbours.size() - 1), newNeighbour);
+        assertEquals(neighbours.get(0), newNeighbour);
     }
 
     @Test
